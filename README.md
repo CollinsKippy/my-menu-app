@@ -1,5 +1,9 @@
 # MyMenuApp
 
+This project intends to explore the Directive Composition API using Angular Material's Menu Component
+
+## Creation
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
 
 ## Development server
