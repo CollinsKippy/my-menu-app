@@ -43,10 +43,10 @@ export const myInjector = Injector.create({
       useFactory: () => {
         return {
           logInfo(val: string): void {
-            console.log(`myInjector Log Info: ${val}`);
+            console.log(`Custom Injector Provided Log Info: ${val}`);
           },
           logError(val: string): void {
-            console.info(`myInjector Log Error: ${val}`);
+            console.info(`Custom Injector Provided Log Error: ${val}`);
           },
         };
       },
@@ -65,10 +65,10 @@ export const myInjector = Injector.create({
       useFactory: () => {
         return {
           logInfo(val: string): void {
-            console.log(`Component Injector Log Info: ${val}`);
+            console.log(`Component-Level Provided Log Info: ${val}`);
           },
           logError(val: string): void {
-            console.info(`Component Injector Log Error: ${val}`);
+            console.info(`Component-Level Provided Log Error: ${val}`);
           },
         };
       },
@@ -84,7 +84,7 @@ export class AppComponent {
     );
     // Using the new inject from angular/core v14
     const url = inject<string>(BASE_URL);
-    console.log('Some Base URL', { url });
+    console.log('Component Provided Base URL', { url });
 
     console.log(
       `2.---------Using constructor @Inject(LOGGER) to get ILogger----------`
@@ -96,7 +96,7 @@ export class AppComponent {
       `3.---------Using custom injector using the from Injector.create({})---`
     );
     const newUrl = myInjector.get<string>(BASE_URL);
-    console.log('A New Base URL',{ newUrl });
+    console.log('Custom Injector Base URL',{ newUrl });
     const myLogger = myInjector.get<ILogger>(LOGGER);
     console.log(
       myLogger.logInfo('Some Info'),
