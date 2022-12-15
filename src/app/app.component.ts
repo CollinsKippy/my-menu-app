@@ -2,16 +2,6 @@ import { Component, inject, InjectionToken, Injector } from '@angular/core';
 
 export const BASE_URL = new InjectionToken<string>('Base Url');
 
-const injector = Injector.create({
-  providers: [
-    {
-      provide: BASE_URL,
-      useValue: 'http://localhost: 4200',
-    },
-  ],
-});
-
-const url = injector.get<string>(BASE_URL);
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
