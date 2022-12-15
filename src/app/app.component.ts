@@ -82,7 +82,6 @@ export class AppComponent {
     console.log(
       `1.---------Using inject method from v14 to get URL-------------------`
     );
-    // Using the new inject from angular/core v14
     const url = inject<string>(BASE_URL);
     console.log('Component Provided Base URL', { url });
 
@@ -91,7 +90,6 @@ export class AppComponent {
     );
     console.log(cLogger.logInfo('Some Info'), cLogger.logError('Some Warning'));
 
-    // Using myInjector to proved a new BaseUrl
     console.log(
       `3.---------Using custom injector using the from Injector.create({})---`
     );
