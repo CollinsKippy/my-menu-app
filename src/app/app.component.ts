@@ -80,20 +80,20 @@ export class AppComponent {
 
   constructor(@Inject(LOGGER) cLogger: ILogger) {
     console.log(
-      `----------Using inject from v14 to get URL------------------------`
+      `1.---------Using inject method from v14 to get URL-------------------`
     );
     // Using the new inject from angular/core v14
     const url = inject<string>(BASE_URL);
     console.log('Some Base URL', { url });
 
     console.log(
-      `----------Using constructor @Inject(LOGGER) to get ILogger----------`
+      `2.---------Using constructor @Inject(LOGGER) to get ILogger----------`
     );
     console.log(cLogger.logInfo('Some Info'), cLogger.logError('Some Warning'));
 
     // Using myInjector to proved a new BaseUrl
     console.log(
-      `----------Using Custom Injector.create({})------------------------`
+      `3.---------Using custom injector using the from Injector.create({})---`
     );
     const newUrl = myInjector.get<string>(BASE_URL);
     console.log('A New Base URL',{ newUrl });
