@@ -1,4 +1,10 @@
-import { Component, inject, InjectionToken, Injector } from '@angular/core';
+import {
+  Component,
+  Inject,
+  inject,
+  InjectionToken,
+  Injector,
+} from '@angular/core';
 import { ILogger } from './i-logger';
 
 /**
@@ -17,19 +23,34 @@ export const LOGGER = new InjectionToken<ILogger>('My Logger', {
   factory: () => {
     return {
       logInfo(val: string): void {
-        console.log(`Some Log: ${val}`);
+        console.log(`Default Info: ${val}`);
       },
       logError(val: string): void {
-        console.error(`Some Error: ${val}`);
+        console.info(`Default Error: ${val}`);
       },
     };
   },
 });
 
+/**
+ * Whoever uses this injector will get unique dependency values or instances
+ */
 export const myInjector = Injector.create({
   providers: [
     { provide: BASE_URL, useValue: 'http://localhost: 7100' },
-    { provide: BASE_URL, useValue: 'http://localhost: 9100' },
+    {
+      provide: LOGGER,
+      useFactory: () => {
+        return {
+          logInfo(val: string): void {
+            console.log(`myInjector Log Info: ${val}`);
+          },
+          logError(val: string): void {
+            console.info(`myInjector Log Error: ${val}`);
+          },
+        };
+      },
+    },
   ],
 });
 
@@ -37,18 +58,49 @@ export const myInjector = Injector.create({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [{ provide: BASE_URL, useValue: 'http://localhost: 5100' }],
+  providers: [
+    { provide: BASE_URL, useValue: 'http://localhost: 5100' },
+    {
+      provide: LOGGER,
+      useFactory: () => {
+        return {
+          logInfo(val: string): void {
+            console.log(`Component Injector Log Info: ${val}`);
+          },
+          logError(val: string): void {
+            console.info(`Component Injector Log Error: ${val}`);
+          },
+        };
+      },
+    },
+  ], // Specific to this component only
 })
 export class AppComponent {
   title = 'my-menu-app';
 
-  constructor() {
-    // Using inject from angular/core
+  constructor(@Inject(LOGGER) cLogger: ILogger) {
+    console.log(
+      `----------Using inject from v14 to get URL------------------------`
+    );
+    // Using the new inject from angular/core v14
     const url = inject<string>(BASE_URL);
-    console.log({ url });
+    console.log('Some Base URL', { url });
 
-    // Using another injector (myInjector) to proved a new BaseUrl
+    console.log(
+      `----------Using constructor @Inject(LOGGER) to get ILogger----------`
+    );
+    console.log(cLogger.logInfo('Some Info'), cLogger.logError('Some Warning'));
+
+    // Using myInjector to proved a new BaseUrl
+    console.log(
+      `----------Using Custom Injector.create({})------------------------`
+    );
     const newUrl = myInjector.get<string>(BASE_URL);
-    console.log({ newUrl });
+    console.log('A New Base URL',{ newUrl });
+    const myLogger = myInjector.get<ILogger>(LOGGER);
+    console.log(
+      myLogger.logInfo('Some Info'),
+      myLogger.logError('Some Warning')
+    );
   }
 }
