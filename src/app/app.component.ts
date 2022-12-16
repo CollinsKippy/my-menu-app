@@ -6,6 +6,7 @@ import {
   Injector,
 } from '@angular/core';
 import { ILogger } from './i-logger';
+import { LoggerService } from './logger.service';
 
 /**
  * 1. Base Url token with default value in case none is provided.
@@ -51,6 +52,9 @@ export const myInjector = Injector.create({
           logError(val: string): void {
             console.info(`Custom Injector Provided Log Error: ${val}`);
           },
+          logDebug(val: string): void {
+            console.debug(`Custom Injector Provided Log Debug: ${val}`);
+          },
         };
       },
     },
@@ -63,20 +67,24 @@ export const myInjector = Injector.create({
   styleUrls: ['./app.component.scss'],
   providers: [
     { provide: BASE_URL, useValue: 'http://localhost: 5100' },
-    {
-      provide: LOGGER,
-      useFactory: () => {
-        return {
-          logInfo(val: string): void {
-            console.log(`Component-Level Provided Log Info: ${val}`);
-          },
-          logError(val: string): void {
-            console.info(`Component-Level Provided Log Error: ${val}`);
-          },
-        };
-      },
-    },
-  ], // Specific to this component only
+    { provide: LOGGER, useClass: LoggerService },
+    // {
+    //   provide: LOGGER,
+    //   useFactory: () => {
+    //     return {
+    //       logInfo(val: string): void {
+    //         console.log(`Component-Level Provided Log Info: ${val}`);
+    //       },
+    //       logError(val: string): void {
+    //         console.info(`Component-Level Provided Log Error: ${val}`);
+    //       },
+    //       logDebug(val: string): void {
+    //         console.debug(`Component-Level Injector Provided Log Debug: ${val}`);
+    //       },
+    //     };
+    //   },
+    // },
+  ],
 })
 export class AppComponent {
   title = 'my-menu-app';

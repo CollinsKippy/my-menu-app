@@ -8,14 +8,14 @@ export class LoggerService implements ILogger {
   constructor() {}
 
   logInfo(val: string): void {
-    throw new Error('Method not implemented.');
+    console.log(`Logger Service: ${val}`);
   }
 
   logError(val: string): void {
-    throw new Error('Method not implemented.');
+    console.info(`Logger Service: ${val}`);
   }
 
   logDebug(val: string): void {
-    throw new Error('Method not implemented.');
+    console.debug(`Logger Service: ${val}`);
   }
 }
