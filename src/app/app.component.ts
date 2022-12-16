@@ -28,6 +28,9 @@ export const LOGGER = new InjectionToken<ILogger>('My Logger', {
       logError(val: string): void {
         console.info(`Default Error: ${val}`);
       },
+      logDebug(val: string): void {
+        console.debug(`Default Debug: ${val}`);
+      },
     };
   },
 });
@@ -94,7 +97,7 @@ export class AppComponent {
       `3.---------Using custom injector using the from Injector.create({})---`
     );
     const newUrl = myInjector.get<string>(BASE_URL);
-    console.log('Custom Injector Base URL',{ newUrl });
+    console.log('Custom Injector Base URL', { newUrl });
     const myLogger = myInjector.get<ILogger>(LOGGER);
     console.log(
       myLogger.logInfo('Some Info'),
