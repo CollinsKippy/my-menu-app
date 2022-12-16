@@ -1,6 +1,7 @@
 # MyMenuApp
 
-This project intends to explore the Directive Composition API using Angular Material's Menu Component
+This project intends to explore the Directive Composition API using Angular Material's Menu Component.
+The initial content explores the DI system of angular using InjectionToken and Injectors.
 
 ## Creation
 
