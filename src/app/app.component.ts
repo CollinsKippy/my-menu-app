@@ -33,7 +33,7 @@ export const LOGGER = new InjectionToken<ILogger>('My Logger', {
 });
 
 /**
- * Whoever uses this injector will get unique dependency values or instances
+ * Whoever uses this injector will get different dependency values or instances
  */
 export const myInjector = Injector.create({
   providers: [
